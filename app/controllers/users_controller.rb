@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     end
     
     def create
-        if params[:password] == params[:password_confirmation]
+        if params[:user][:password] == params[:user][:password_confirmation]
             @user = User.create(user_params)
             session[:user_id] = @user.id
             redirect_to hello_path

@@ -7,10 +7,10 @@ class SessionsController < ApplicationController
     end
     
     def create
-      if params[:password] && params[:name] 
-        @user = User.find_by(name: params[:name])
+      if params[:user][:password] && params[:user][:name] 
+        @user = User.find_by(name: params[:user][:name])
         return head(:forbidden) unless
-            @user.authenticate(params[:password])
+            @user.authenticate(params[:user][:password])
         session[:user_id] = @user.id
         redirect_to hello_path
       else
