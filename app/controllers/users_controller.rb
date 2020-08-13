@@ -4,15 +4,19 @@ class UsersController < ApplicationController
     
     def create
         @user = User.new(user_params)
-        redirect_to '/signup' unless @user.save
+        return redirect_to '/signup' unless @user.save
         session[:user_id] = @user.id
-      end
+        redirect_to '/users/show'
+    end
 
+    def show 
+        is_logged_in?
+    end
      
       private
      
       def user_params
         params.require(:user).permit(:name, :password, :password_confirmation)
       end
-
+      
 end

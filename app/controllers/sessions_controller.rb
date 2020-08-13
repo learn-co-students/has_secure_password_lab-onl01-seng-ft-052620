@@ -7,27 +7,24 @@ class SessionsController < ApplicationController
 
     def create
         # binding.pry
-        @user = User.find_by(name: params[:user][:name])
-        return head(:forbidden) unless @user.authenticate(params[:user][:password])
-        session[:user_id] = @user.id
+        user = User.find_by(name: params[:user][:name])
+
+        user = user.try(:authenticate, params[:user][:password])
+    
+        return redirect_to(controller: 'sessions', action: 'new') unless user
+    
+        session[:user_id] = user.id
+    
+        @user = user
+    
         redirect_to '/users/show'
     end
 
     def destroy 
-        if session[:user_id]
-            session.destroy
-            redirect_to '/login'
-          end
+        session.delete :user_id 
+        redirect_to '/'
     end 
 
-    def show 
-        is_logged_in?
-    end
-
-    private 
-
-    def is_logged_in? 
-        redirect_to '/login' unless session.include? [:user_id]
-    end
+ 
 
 end
