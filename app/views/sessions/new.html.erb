@@ -1,10 +1,10 @@
-<%= form_for @user, url: login_path, method: :post do |f| %>
+<%= form_for User.new, url: login_path, method: :post do |f| %>
   <%= f.label :name %>
-  <%= f.text_field :name %>
+  <%= f.text_field :name %><br>
 
   <%= f.label :password %>
-  <%= f.password_field :password %>
+  <%= f.password_field :password %><br>
 
-  <%= f.submit "log in" %>
-  <%= link_to(controller: 'users', action: 'new') { 'sign up' } %>
+  <%= f.submit "log in" %><br>
+  <%= link_to(controller: 'users', action: 'new') { 'sign up' } %><br>
 <% end %>
